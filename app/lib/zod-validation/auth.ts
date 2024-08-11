@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
 export const signInSchema = z.object({
-  email: z.string(),
+  email: z.string().email(),
   password: z.string()
 })
 
 export const signUpSchema = signInSchema.extend({
-  username: z.string().email()
+  username: z.string()
 })
 
 export type SignInSchemaType = z.infer<typeof signInSchema>

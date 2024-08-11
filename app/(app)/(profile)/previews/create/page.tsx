@@ -54,11 +54,14 @@ export default function CreatePreviewPage() {
             <FormItem>
               <FormLabel>Media files</FormLabel>
               <FormControl>
-                <Input
-                  type="file"
+                <input type="file"
                   accept="mp4"
                   placeholder="shadcn"
-                  {...field} />
+                  onChange={(e) => {
+                    const file = e.target.files![0]
+                    form.setValue("media", [file])
+                  }} />
+                {/* <Input {...field} /> */}
               </FormControl>
               <picture>
                 <img src={URL.createObjectURL(form.watch("media")[0])} alt="" />

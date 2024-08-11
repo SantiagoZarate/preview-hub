@@ -12,7 +12,7 @@ export class AuthService {
       options: {
         data: {
           username
-        }
+        },
       }
     })
 
@@ -28,14 +28,23 @@ export class AuthService {
 
     const { data, error } = await db.auth.signInWithPassword({
       password,
-      email
+      email,
     })
 
     if (error) {
+      console.log(error)
+      console.log(data)
       throw new Error(error.message)
     }
 
     return data
   }
 
+  async getUser() {
+    const db = await createClient()
+
+    const { data } = await db.auth.getUser()
+
+    return data.user
+  }
 }

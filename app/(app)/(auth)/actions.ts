@@ -1,3 +1,5 @@
+"use server"
+
 import { signInSchema, signUpSchema } from '@/lib/zod-validation/auth'
 import { createServerAction, ZSAError } from 'zsa'
 import { AuthService } from '../../../src/services/AuthService'
@@ -25,7 +27,7 @@ export const login = createServerAction()
     const authService = new AuthService()
 
     try {
-      authService.signInWithPassword(input)
+      await authService.signInWithPassword(input)
     } catch (error) {
       throw new ZSAError("ERROR", error)
     }
