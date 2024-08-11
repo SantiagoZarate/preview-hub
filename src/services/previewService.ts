@@ -1,5 +1,6 @@
 import { PreviewServerType } from "@/lib/zod-validation/preview";
 import { PreviewRepository } from "../repositories/PreviewRepository";
+import { PreviewSelect } from "../types/preview";
 
 export class PreviewService {
 
@@ -16,5 +17,10 @@ export class PreviewService {
     })
 
     return results
+  }
+
+  async getOne(id: PreviewSelect) {
+    const result = await this._previewRepository.getById(id);
+    return result
   }
 }

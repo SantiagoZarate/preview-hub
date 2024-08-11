@@ -1,4 +1,4 @@
-import { PreviewInsert } from "../types/preview";
+import { PreviewInsert, PreviewSelect } from "../types/preview";
 import { createClient } from "../utils/supabase/server";
 
 export class PreviewRepository {
@@ -18,6 +18,21 @@ export class PreviewRepository {
     })
       .select("*")
       .single()
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return data
+  }
+
+  async getById(id: PreviewSelect) {
+    const db = await createClient()
+
+    const { data, error } = await db
+      .from(this._tableName)
+      .select("*")
+      .eq("id", id)
 
     if (error) {
       throw new Error(error.message)

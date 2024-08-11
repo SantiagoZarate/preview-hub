@@ -14,17 +14,18 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
+import { signUpSchema, SignUpSchemaType } from "@/lib/zod-validation/auth"
 
-export default function CreatePreviewPage() {
-  const form = useForm<PreviewClientType>({
-    resolver: zodResolver(previewSchema),
+export default function LoginPage() {
+  const form = useForm<SignUpSchemaType>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
-      title: ""
+      email: "",
+      password: ""
     }
   })
 
-  const onSubmit = (data: PreviewClientType) => {
+  const onSubmit = (data: SignUpSchemaType) => {
     console.log(data)
   }
 
@@ -33,15 +34,15 @@ export default function CreatePreviewPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="title"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Preview name</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Work in progress..." {...field} />
+                <Input placeholder="leomessi@gmail.com" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                This is your email.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -49,22 +50,31 @@ export default function CreatePreviewPage() {
         />
         <FormField
           control={form.control}
-          name="media"
+          name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Media files</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  type="file"
-                  accept="mp4"
-                  placeholder="shadcn"
-                  {...field} />
+                <Input type="password" placeholder="shadcn" {...field} />
               </FormControl>
-              <picture>
-                <img src={URL.createObjectURL(form.watch("media")[0])} alt="" />
-              </picture>
               <FormDescription>
-                This are your media files.
+                This is your password.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your password.
               </FormDescription>
               <FormMessage />
             </FormItem>

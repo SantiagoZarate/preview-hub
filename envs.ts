@@ -6,6 +6,6 @@ const envsSchema = z.object({
 })
 
 export const envs = envsSchema.parse({
-  SUPABASE_URL: process.env.SUPABASE_URL!,
-  SUPABASE_KEY: process.env.SUPABASE_KEY!
+  SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  SUPABASE_KEY: process.env.NEXT_PUBLIC_SUPABASE_KEY!
 })

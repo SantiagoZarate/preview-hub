@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,26 +14,18 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string()
-})
-
-type FormType = z.infer<typeof formSchema>
+import { signInSchema, SignInSchemaType } from "@/lib/zod-validation/auth"
 
 export default function LoginPage() {
-  const form = useForm<FormType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignInSchemaType>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: ""
     }
   })
 
-  const onSubmit = (data: FormType) => {
+  const onSubmit = (data: SignInSchemaType) => {
     console.log(data)
   }
 
@@ -43,15 +34,15 @@ export default function LoginPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="leomessi@gmail.com" {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                This is your email.
               </FormDescription>
               <FormMessage />
             </FormItem>
