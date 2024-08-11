@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,25 +14,17 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  multimedia: z.instanceof(File)
-})
-
-type FormType = z.infer<typeof formSchema>
+import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
 
 export default function CreatePreviewPage() {
-  const form = useForm<FormType>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<PreviewClientType>({
+    resolver: zodResolver(previewSchema),
     defaultValues: {
-      name: ""
+      title: ""
     }
   })
 
-  const onSubmit = (data: FormType) => {
+  const onSubmit = (data: PreviewClientType) => {
     console.log(data)
   }
 
@@ -42,7 +33,7 @@ export default function CreatePreviewPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Preview name</FormLabel>
@@ -58,15 +49,15 @@ export default function CreatePreviewPage() {
         />
         <FormField
           control={form.control}
-          name="name"
+          name="media"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Media files</FormLabel>
               <FormControl>
                 <Input type="file" accept="mp4" placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
-                This is your password.
+                This are your media files.
               </FormDescription>
               <FormMessage />
             </FormItem>

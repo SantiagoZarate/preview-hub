@@ -41,6 +41,35 @@ export type Database = {
           },
         ]
       }
+      media: {
+        Row: {
+          created_at: string
+          id: number
+          preview_id: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          preview_id?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          preview_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_preview_id_fkey"
+            columns: ["preview_id"]
+            isOneToOne: false
+            referencedRelation: "preview"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       preview: {
         Row: {
           created_at: string
