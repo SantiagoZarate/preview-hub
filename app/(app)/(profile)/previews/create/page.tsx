@@ -63,7 +63,7 @@ export default function CreatePreviewPage() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="file" placeholder="shadcn" {...field} />
+                <Input type="file" accept="mp4" placeholder="shadcn" {...field} />
               </FormControl>
               <FormDescription>
                 This is your password.
