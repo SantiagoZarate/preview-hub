@@ -28,7 +28,7 @@ export default function PreviewsPage() {
           <Text className="pl-2">Your previews</Text>
         </header>
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>A list of your previews.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Invoice</TableHead>
@@ -42,7 +42,14 @@ export default function PreviewsPage() {
               [1, 2, 3, 4, 5].map(n => (
                 <TableRow key={n}>
                   <TableCell className="font-medium">INV001</TableCell>
-                  <TableCell>Paid</TableCell>
+                  <TableCell>{
+                    n % 3 !== 0
+                      ?
+                      <p className="bg-green-400 text-green-700 w-fit rounded-md px-2">Active</p>
+                      :
+                      <p className="bg-gray-200 text-gray-500 w-fit rounded-md px-2">Inactive</p>
+                  }
+                  </TableCell>
                   <TableCell>Credit Card</TableCell>
                   <TableCell className="text-right">$250.00</TableCell>
                 </TableRow>
