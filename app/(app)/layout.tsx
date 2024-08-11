@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { PropsWithChildren } from "react";
-import { Header } from "./components/common/header/Header";
-import { Footer } from "./components/common/footer/Footer";
+import { Header } from "../components/common/header/Header";
+import { Footer } from "../components/common/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={inter.className + " bg-background text-primary"}>
         <Header />
         <div className="min-h-screen grid grid-rows-[1fr_auto] pt-20">
-          <section className="max-w-screen-xl mx-auto">
+          <section className="max-w-screen-xl w-full mx-auto">
             {children}
           </section>
           <Footer />
