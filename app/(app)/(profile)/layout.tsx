@@ -1,23 +1,30 @@
+import { Text } from "@/components/ui/text";
 import { profileLinks } from "@/data/constants";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export default function ProfileLayout({ children }: PropsWithChildren) {
   return (
-    <section className="grid grid-cols-[auto_1fr] gap-4 h-full">
+    <section className="grid grid-cols-[auto_1fr] h-full">
       <aside className="h-full border-r border-border">
-        <ul className="flex flex-col">
+        <ul className="flex flex-col p-4 gap-2">
           {
             profileLinks.map(link => (
-              <Link href={link.path}>
-                {link.value}
+              <Link
+                key={link.value}
+                className="p-2 w-36  bg-secondary rounded-md hover:bg-primary-foreground"
+                href={link.path}>
+                <Text>
+                  {link.value}
+                </Text>
               </Link>
             ))
           }
         </ul>
-        some links go here
       </aside>
-      {children}
+      <section className="p-4">
+        {children}
+      </section>
     </section>
   )
 }
