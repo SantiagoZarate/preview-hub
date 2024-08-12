@@ -8,14 +8,13 @@ export const previewSchema = z.object({
 })
 
 export const previewClientSchema = previewSchema.extend({
-  media: z.array(
-    z.instanceof(File)
-      .refine(media => media.size <= 1024 * 1024 * 50, { message: 'Media must be less than 50mb' }))
-    .min(1, { message: 'Add at least some media' })
+  media: z.instanceof(File)
+    .refine(media => media.size <= 1024 * 1024 * 50, { message: 'Media must be less than 50mb' }).nullable()
+  // .transform(files => files.item(0)!)
 })
 
 export const previewServerSchema = previewSchema.extend({
-  media: z.array(z.number())
+  media: z.string()
 })
 
 export type PreviewClientType = z.infer<typeof previewClientSchema>

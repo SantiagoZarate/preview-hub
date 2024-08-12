@@ -11,15 +11,15 @@ export class PreviewRepository {
   async create(newPreview: PreviewInsert) {
     const db = await createClient()
 
-    const { data, error } = await db.from(this._tableName).insert({
-      "description": newPreview.description,
-      "created_by": newPreview.created_by,
-      "title": newPreview.title,
+    const { data, error } = await db.rpc("insert_preview", {
+      _title: newPreview.title,
+      _description: newPreview.description,
+      _media: newPreview.media,
+      _author: newPreview.created_by
     })
-      .select("*")
-      .single()
 
     if (error) {
+      console.log(error)
       throw new Error(error.message)
     }
 

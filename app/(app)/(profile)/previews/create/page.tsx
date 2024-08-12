@@ -15,17 +15,40 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
+import { createClient } from "../../../../../src/utils/supabase/client"
+import { useServerAction } from "zsa-react"
+import { createPreview } from "./actions"
+import { useState } from "react"
 
 export default function CreatePreviewPage() {
+  const [videoPreview, setVideoPreview] = useState<File | undefined>(undefined)
   const form = useForm<PreviewClientType>({
     resolver: zodResolver(previewSchema),
     defaultValues: {
-      title: ""
+      title: "",
+      description: "",
+      media: undefined
     }
   })
 
-  const onSubmit = (data: PreviewClientType) => {
-    console.log(data)
+  const { execute, isPending } = useServerAction(createPreview)
+
+  const onSubmit = async ({ description, media, title }: PreviewClientType) => {
+    const storage = createClient()
+    const previewStorageName = `preview-${title}-${new Date()}`
+
+    await storage.storage.from("preview-hub").upload(previewStorageName, videoPreview!, {
+      cacheControl: "3600",
+      upsert: true
+    })
+
+    const { data: { publicUrl } } = await storage.storage.from("preview-hub").getPublicUrl(previewStorageName)
+
+    execute({
+      description,
+      media: publicUrl,
+      title
+    })
   }
 
   return (
@@ -49,23 +72,54 @@ export default function CreatePreviewPage() {
         />
         <FormField
           control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preview description</FormLabel>
+              <FormControl>
+                <Input placeholder="Work in progress..." {...field} />
+              </FormControl>
+              <FormDescription>
+                A brief preview description.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="media"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Media files</FormLabel>
               <FormControl>
-                <input type="file"
-                  accept="mp4"
-                  placeholder="shadcn"
+                {/* <Input
+                  type="file"
+                  {...fileRef} /> */}
+                <input
+                  type="file"
                   onChange={(e) => {
-                    const file = e.target.files![0]
-                    form.setValue("media", [file])
+                    const file = e.currentTarget.files![0]
+                    setVideoPreview(file)
+                    form.setValue("media", file)
                   }} />
-                {/* <Input {...field} /> */}
               </FormControl>
-              <picture>
-                <img src={URL.createObjectURL(form.watch("media")[0])} alt="" />
-              </picture>
+              <figure className="relative aspect-video min-h-52 rounded-md overflow-hidden">
+                {
+                  videoPreview &&
+                  <video
+                    controls
+                    className="absolute z-10 w-full h-full"
+                    src={URL.createObjectURL(videoPreview!)}></video>
+                }
+                <div className="w-full h-full bg-secondary" />
+              </figure>
+              <Button
+                disabled={form.watch("media") === undefined}
+                type="button"
+                onClick={() => form.resetField("media")}>
+                clear
+              </Button>
               <FormDescription>
                 This are your media files.
               </FormDescription>
@@ -73,7 +127,7 @@ export default function CreatePreviewPage() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button disabled={isPending} type="submit">Submit</Button>
       </form>
     </Form>
   )

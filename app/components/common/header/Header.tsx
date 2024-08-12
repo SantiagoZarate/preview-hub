@@ -8,7 +8,7 @@ export async function Header() {
 
   return (
     <header className="w-full px-8 fixed top-0">
-      <div className="mx-auto max-w-screen-xl justify-between items-center border-b border-border flex">
+      <div className="mx-auto max-w-screen-xl justify-between items-center border-b border-border flex py-2">
         <section className="flex gap-4">
           <p className="font-bold">
             Preview Hub
