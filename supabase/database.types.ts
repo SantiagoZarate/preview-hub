@@ -81,7 +81,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          created_by?: string
+          created_by: string
           description: string
           id?: string
           is_active?: boolean
@@ -97,9 +97,32 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "preview_created_by_fkey"
+            foreignKeyName: "preview_created_by_fkey1"
             columns: ["created_by"]
             isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          id: string
+          username: string | null
+        }
+        Insert: {
+          id: string
+          username?: string | null
+        }
+        Update: {
+          id?: string
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -110,7 +133,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_username: {
+        Args: {
+          _id: string
+        }
+        Returns: Json
+      }
+      insert_preview: {
+        Args: {
+          _title: string
+          _description: string
+          _media: string
+          _author: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
