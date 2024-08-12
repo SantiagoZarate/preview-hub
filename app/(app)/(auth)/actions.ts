@@ -1,15 +1,15 @@
 "use server"
 
 import { signInSchema, signUpSchema } from '@/lib/zod-validation/auth'
-import { createServerAction, ZSAError } from 'zsa'
-import { AuthService } from '../../../src/services/AuthService'
-import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { createServerAction, ZSAError } from 'zsa'
+import { ServiceLocator } from '../../../src/services/serviceLocator'
 
 export const signUp = createServerAction()
   .input(signUpSchema)
   .handler(async ({ input }) => {
-    const authService = new AuthService()
+    const authService = ServiceLocator.getService("authService")
 
     try {
       authService.signUp(input)
@@ -24,7 +24,7 @@ export const signUp = createServerAction()
 export const login = createServerAction()
   .input(signInSchema)
   .handler(async ({ input }) => {
-    const authService = new AuthService()
+    const authService = ServiceLocator.getService("authService")
 
     try {
       await authService.signInWithPassword(input)

@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { AuthService } from "../../../../src/services/AuthService";
+import { ServiceLocator } from "../../../../src/services/serviceLocator";
 
 export async function Header() {
-  const authService = new AuthService()
+  const authService = ServiceLocator.getService("authService")
   const user = await authService.getUser()
 
   return (

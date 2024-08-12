@@ -1,15 +1,14 @@
 "use server"
 
 import { previewServerSchema } from '@/lib/zod-validation/preview'
-import { createServerAction, ZSAError } from 'zsa'
-import { PreviewService } from '../../../../../src/services/previewService'
-import { PreviewRepository } from '../../../../../src/repositories/PreviewRepository'
 import { redirect } from 'next/navigation'
+import { createServerAction, ZSAError } from 'zsa'
+import { ServiceLocator } from '../../../../../src/services/serviceLocator'
 
 export const createPreview = createServerAction()
   .input(previewServerSchema)
   .handler(async ({ input }) => {
-    const previewService = new PreviewService(new PreviewRepository())
+    const previewService = ServiceLocator.getService("previewService")
     let previewID;
 
     try {
