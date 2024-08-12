@@ -4,6 +4,7 @@ import "./globals.css";
 import { PropsWithChildren } from "react";
 import { Header } from "../components/common/header/Header";
 import { Footer } from "../components/common/footer/Footer";
+import { ToastProvider } from "@/components/ui/toastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,13 +17,15 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className + " bg-background text-primary"}>
-        <Header />
-        <div className="min-h-screen grid grid-rows-[1fr_auto] pt-20">
-          <section className="max-w-screen-xl w-full mx-auto">
-            {children}
-          </section>
-          <Footer />
-        </div>
+        <ToastProvider>
+          <Header />
+          <div className="min-h-screen grid grid-rows-[1fr_auto] pt-20">
+            <section className="max-w-screen-xl w-full mx-auto">
+              {children}
+            </section>
+            <Footer />
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

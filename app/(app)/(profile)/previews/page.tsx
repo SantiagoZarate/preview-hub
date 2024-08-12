@@ -1,10 +1,21 @@
+import { CrossMicroIcon } from "@/components/icons/CrossMicroIcon";
+import { LinkMicroIcon } from "@/components/icons/LinkMicroIcon";
+import { PencilMicroIcon } from "@/components/icons/PencilMicroIcon";
 import { PhotoMiniIcon } from "@/components/icons/PhotoMiniIcon";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/buttonLink";
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Text } from "@/components/ui/text";
+import { ServiceLocator } from "@service/serviceLocator";
 import Link from "next/link";
+import { ShareLinkButton } from "./ShareLinkButton";
+import { deletePreview } from "./actions";
+import { DeletePreviewButton } from "./DeletePreviewButton";
 
-export default function PreviewsPage() {
+export default async function PreviewsPage() {
+  const previewService = ServiceLocator.getService("previewService")
+  const previews = await previewService.getByUser()
+
   return (
     <section className="flex flex-col gap-8">
       <header className="flex flex-col gap-2 p-4 bg-secondary border-dotted border-border border rounded-lg">
@@ -31,27 +42,30 @@ export default function PreviewsPage() {
           <TableCaption>A list of your previews.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead className="w-[100px]">Name</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {
-              [1, 2, 3, 4, 5].map(n => (
-                <TableRow key={n}>
-                  <TableCell className="font-medium">INV001</TableCell>
+              previews.map((preview, index) => (
+                <TableRow key={preview.id}>
+                  <TableCell className="font-medium">{preview.title}</TableCell>
                   <TableCell>{
-                    n % 3 !== 0
+                    preview.is_active
                       ?
                       <p className="bg-green-400 text-green-700 w-fit rounded-md px-2">Active</p>
                       :
                       <p className="bg-gray-200 text-gray-500 w-fit rounded-md px-2">Inactive</p>
                   }
                   </TableCell>
-                  <TableCell>Credit Card</TableCell>
-                  <TableCell className="text-right">$250.00</TableCell>
+                  <TableCell>{preview.description}</TableCell>
+                  <TableCell className="text-right flex gap-2 justify-end">
+                    <ShareLinkButton id={preview.id} />
+                    <DeletePreviewButton id={preview.id} />
+                  </TableCell>
                 </TableRow>
               ))
             }

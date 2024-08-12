@@ -1,14 +1,15 @@
 import { PreviewServerType } from "@/lib/zod-validation/preview";
 import { PreviewRepository } from "../repositories/PreviewRepository";
-import { PreviewSelect } from "../types/preview";
+import { PreviewDelete, PreviewSelect } from "../types/preview";
 import { AuthService } from "./AuthService";
+import { ServiceLocator } from "./serviceLocator";
 
 export class PreviewService {
 
   constructor(private _previewRepository: PreviewRepository) { }
 
   async create(data: PreviewServerType) {
-    const authService = new AuthService()
+    const authService = ServiceLocator.getService("authService")
     const user = await authService.getUser()
 
     const results = await this._previewRepository.create({
@@ -24,5 +25,18 @@ export class PreviewService {
   async getOne(id: PreviewSelect) {
     const result = await this._previewRepository.getById(id);
     return result
+  }
+
+  async getByUser() {
+    const authService = ServiceLocator.getService("authService")
+    const user = await authService.getUser()
+
+    const results = await this._previewRepository.getByUser(user?.id!);
+    return results
+  }
+
+  async deleteOne(id: PreviewDelete) {
+    const result = await this._previewRepository.deleteById(id);
+    return result;
   }
 }

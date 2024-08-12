@@ -35,7 +35,7 @@ export default function CreatePreviewPage() {
 
   const onSubmit = async ({ description, media, title }: PreviewClientType) => {
     const storage = createClient()
-    const previewStorageName = `preview-${title}-${new Date()}`
+    const previewStorageName = `preview-${title}`
 
     await storage.storage.from("preview-hub").upload(previewStorageName, videoPreview!, {
       cacheControl: "3600",
@@ -93,9 +93,6 @@ export default function CreatePreviewPage() {
             <FormItem>
               <FormLabel>Media files</FormLabel>
               <FormControl>
-                {/* <Input
-                  type="file"
-                  {...fileRef} /> */}
                 <input
                   type="file"
                   onChange={(e) => {

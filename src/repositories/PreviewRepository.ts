@@ -1,4 +1,7 @@
-import { PreviewInsert, PreviewSelect } from "../types/preview";
+import { error } from "console";
+import { PreviewDTO, previewSchemaDTO } from "../shared/dtos/previewDTO";
+import { PreviewMediaDTO, previewMediaSchemaDTO } from "../shared/dtos/previewMediaDTO";
+import { PreviewDelete, PreviewInsert, PreviewSelect } from "../types/preview";
 import { createClient } from "../utils/supabase/server";
 
 export class PreviewRepository {
@@ -26,18 +29,53 @@ export class PreviewRepository {
     return data
   }
 
-  async getById(id: PreviewSelect) {
+  async getById(id: PreviewSelect): Promise<PreviewMediaDTO> {
+    const db = await createClient()
+
+    const { data, error } = await db
+      .from(this._tableName)
+      .select("*, media(*)")
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      console.log(error)
+      throw new Error(error.message)
+    }
+
+    console.log(data)
+    return previewMediaSchemaDTO.parse(data)
+  }
+
+  async getByUser(userID: string): Promise<PreviewDTO[]> {
     const db = await createClient()
 
     const { data, error } = await db
       .from(this._tableName)
       .select("*")
-      .eq("id", id)
+      .eq("created_by", userID)
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data.map(d => previewSchemaDTO.parse(d))
+  }
+
+  async deleteById(id: PreviewDelete) {
+    const db = await createClient()
+
+    const { data, error } = await db
+      .from(this._tableName)
+      .delete()
+      .eq("id", id)
+      .select("*")
+      .single()
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return previewSchemaDTO.parse(data)
   }
 }
