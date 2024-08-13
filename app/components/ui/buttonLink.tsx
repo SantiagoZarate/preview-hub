@@ -6,7 +6,7 @@ interface Props extends ButtonProps {
   icon: JSX.Element
 }
 
-export function ButtonLink({ icon, children, ...args }: Props) {
+export function ButtonIcon({ icon, children, ...args }: Props) {
   return (
     <Button className="group" {...args}>
       <span className="group-hover:-translate-x-0 translate-x-2 transition opacity-0 group-hover:opacity-100">

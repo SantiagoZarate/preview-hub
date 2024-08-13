@@ -1,16 +1,13 @@
-import { CrossMicroIcon } from "@/components/icons/CrossMicroIcon";
-import { LinkMicroIcon } from "@/components/icons/LinkMicroIcon";
-import { PencilMicroIcon } from "@/components/icons/PencilMicroIcon";
 import { PhotoMiniIcon } from "@/components/icons/PhotoMiniIcon";
+import { UpRightArrowMicroIcon } from "@/components/icons/UpRightArrowMicroIcon";
 import { Button } from "@/components/ui/button";
-import { ButtonLink } from "@/components/ui/buttonLink";
-import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { ButtonIcon } from "@/components/ui/buttonLink";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Text } from "@/components/ui/text";
 import { ServiceLocator } from "@service/serviceLocator";
 import Link from "next/link";
-import { ShareLinkButton } from "./ShareLinkButton";
-import { deletePreview } from "./actions";
 import { DeletePreviewButton } from "./DeletePreviewButton";
+import { ShareLinkButton } from "./ShareLinkButton";
 
 export default async function PreviewsPage() {
   const previewService = ServiceLocator.getService("previewService")
@@ -65,6 +62,11 @@ export default async function PreviewsPage() {
                   <TableCell className="text-right flex gap-2 justify-end">
                     <ShareLinkButton id={preview.id} />
                     <DeletePreviewButton id={preview.id} />
+                    <Link href={`/preview/${preview.id}`}>
+                      <ButtonIcon variant={"ghost"} icon={<UpRightArrowMicroIcon />}>
+                        Go
+                      </ButtonIcon>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))

@@ -1,7 +1,7 @@
 "use client"
 
 import { LinkMicroIcon } from "@/components/icons/LinkMicroIcon";
-import { ButtonLink } from "@/components/ui/buttonLink";
+import { ButtonIcon } from "@/components/ui/buttonLink";
 import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
@@ -21,8 +21,8 @@ export function ShareLinkButton({ id }: Props) {
   }
 
   return (
-    <ButtonLink onClick={handleClick} icon={<LinkMicroIcon />}>
+    <ButtonIcon onClick={handleClick} icon={<LinkMicroIcon />}>
       Share
-    </ButtonLink>
+    </ButtonIcon>
   )
 }

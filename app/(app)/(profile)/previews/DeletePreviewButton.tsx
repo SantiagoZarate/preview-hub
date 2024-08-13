@@ -1,7 +1,7 @@
 "use client"
 
 import { CrossMicroIcon } from "@/components/icons/CrossMicroIcon";
-import { ButtonLink } from "@/components/ui/buttonLink";
+import { ButtonIcon } from "@/components/ui/buttonLink";
 import { deletePreview } from "./actions";
 import { useServerAction } from "zsa-react";
 import { toast } from "@/components/ui/use-toast";
@@ -21,12 +21,12 @@ export function DeletePreviewButton({ id }: Props) {
   })
 
   return (
-    <ButtonLink
+    <ButtonIcon
       onClick={() => execute({ id })}
       disabled={isPending}
       variant={"destructive"}
       icon={<CrossMicroIcon />}>
       delete
-    </ButtonLink>
+    </ButtonIcon>
   )
 }
