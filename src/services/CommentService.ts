@@ -8,7 +8,7 @@ export class CommentService {
   async create(data: CommentServerSchemaType) {
     const result = await this._commentRepository.create({
       content: data.content,
-      preview_id: data.previewId
+      project_id: data.previewId
     })
 
     return result;

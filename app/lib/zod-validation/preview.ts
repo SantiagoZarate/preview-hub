@@ -14,7 +14,8 @@ export const previewClientSchema = previewSchema.extend({
 })
 
 export const previewServerSchema = previewSchema.extend({
-  media: z.string()
+  media: z.string(),
+  project_id: z.string()
 })
 
 export type PreviewClientType = z.infer<typeof previewClientSchema>

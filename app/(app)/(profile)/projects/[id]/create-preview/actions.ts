@@ -1,9 +1,9 @@
 "use server"
 
 import { previewServerSchema } from '@/lib/zod-validation/preview'
+import { ServiceLocator } from '@service/serviceLocator'
 import { redirect } from 'next/navigation'
 import { createServerAction, ZSAError } from 'zsa'
-import { ServiceLocator } from '../../../../../src/services/serviceLocator'
 
 export const createPreview = createServerAction()
   .input(previewServerSchema)

@@ -19,7 +19,7 @@ export class PreviewRepository {
       _title: newPreview.title,
       _description: newPreview.description,
       _media: newPreview.media,
-      _author: newPreview.created_by
+      _project_id: newPreview.project_id
     })
 
     if (error) {
@@ -48,13 +48,13 @@ export class PreviewRepository {
     return previewUserMediaSchemaDTO.parse(data)
   }
 
-  async getByUser(userID: string): Promise<PreviewDTO[]> {
+  async getByProject(projectID: string): Promise<PreviewDTO[]> {
     const db = await createClient()
 
     const { data, error } = await db
       .from(this._tableName)
       .select("*")
-      .eq("created_by", userID)
+      .eq("project_id", projectID)
 
     if (error) {
       throw new Error(error.message)

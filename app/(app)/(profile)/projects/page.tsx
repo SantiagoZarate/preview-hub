@@ -9,8 +9,8 @@ import Link from "next/link";
 import { DeletePreviewButton } from "./DeletePreviewButton";
 import { ShareLinkButton } from "./ShareLinkButton";
 
-export default async function PreviewsPage() {
-  const previewService = ServiceLocator.getService("previewService")
+export default async function ProjectsPage() {
+  const previewService = ServiceLocator.getService("projectService")
   const previews = await previewService.getByUser()
 
   return (
@@ -22,9 +22,9 @@ export default async function PreviewsPage() {
         <Text>
           Share your work in progress with customer to get feedback from them
         </Text>
-        <Link className="w-fit" href={"/previews/create"}>
+        <Link className="w-fit" href={"/projects/create"}>
           <Button className="">
-            Add new preview
+            Create a new project
           </Button>
         </Link>
       </header>
@@ -49,7 +49,7 @@ export default async function PreviewsPage() {
             {
               previews.map((preview, index) => (
                 <TableRow key={preview.id}>
-                  <TableCell className="font-medium">{preview.title}</TableCell>
+                  <TableCell className="font-medium">{preview.name}</TableCell>
                   <TableCell>{
                     preview.is_active
                       ?
@@ -62,7 +62,7 @@ export default async function PreviewsPage() {
                   <TableCell className="text-right flex gap-2 justify-end">
                     <ShareLinkButton id={preview.id} />
                     <DeletePreviewButton id={preview.id} />
-                    <Link href={`/preview/${preview.id}`}>
+                    <Link href={`/projects/${preview.id}`}>
                       <ButtonIcon variant={"ghost"} icon={<UpRightArrowMicroIcon />}>
                         Go
                       </ButtonIcon>
@@ -73,7 +73,6 @@ export default async function PreviewsPage() {
             }
           </TableBody>
         </Table>
-
       </section>
     </section>
   )

@@ -14,29 +14,26 @@ export type Database = {
           content: string
           created_at: string
           id: string
-          preview_id: string | null
-          timestamp_in_seconds: number
+          project_id: string
         }
         Insert: {
           content: string
           created_at?: string
           id?: string
-          preview_id?: string | null
-          timestamp_in_seconds: number
+          project_id: string
         }
         Update: {
           content?: string
           created_at?: string
           id?: string
-          preview_id?: string | null
-          timestamp_in_seconds?: number
+          project_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "comment_preview_id_fkey"
-            columns: ["preview_id"]
+            foreignKeyName: "comment_project_id_fkey"
+            columns: ["project_id"]
             isOneToOne: false
-            referencedRelation: "preview"
+            referencedRelation: "project"
             referencedColumns: ["id"]
           },
         ]
@@ -70,34 +67,98 @@ export type Database = {
           },
         ]
       }
+      observation: {
+        Row: {
+          at_timestamp: number | null
+          content: string
+          created_at: string
+          id: number
+          media_id: number
+        }
+        Insert: {
+          at_timestamp?: number | null
+          content: string
+          created_at?: string
+          id?: number
+          media_id: number
+        }
+        Update: {
+          at_timestamp?: number | null
+          content?: string
+          created_at?: string
+          id?: number
+          media_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "observation_media_id_fkey"
+            columns: ["media_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       preview: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          project_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          project_id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          project_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "preview_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "project"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project: {
         Row: {
           created_at: string
           created_by: string
           description: string
           id: string
-          is_active: boolean
-          title: string
+          is_active: boolean | null
+          name: string
         }
         Insert: {
           created_at?: string
-          created_by: string
+          created_by?: string
           description: string
           id?: string
-          is_active?: boolean
-          title: string
+          is_active?: boolean | null
+          name: string
         }
         Update: {
           created_at?: string
           created_by?: string
           description?: string
           id?: string
-          is_active?: boolean
-          title?: string
+          is_active?: boolean | null
+          name?: string
         }
         Relationships: [
           {
-            foreignKeyName: "preview_created_by_fkey1"
+            foreignKeyName: "project_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "users"
@@ -144,7 +205,7 @@ export type Database = {
           _title: string
           _description: string
           _media: string
-          _author: string
+          _project_id: string
         }
         Returns: string
       }

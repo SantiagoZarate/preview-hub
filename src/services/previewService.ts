@@ -13,10 +13,10 @@ export class PreviewService {
     const user = await authService.getUser()
 
     const results = await this._previewRepository.create({
-      created_by: user?.id!,
       description: data.description,
       title: data.title,
-      media: data.media
+      media: data.media,
+      project_id: data.project_id
     })
 
     return results
@@ -25,14 +25,6 @@ export class PreviewService {
   async getOne(id: PreviewSelect) {
     const result = await this._previewRepository.getById(id);
     return result
-  }
-
-  async getByUser() {
-    const authService = ServiceLocator.getService("authService")
-    const user = await authService.getUser()
-
-    const results = await this._previewRepository.getByUser(user?.id!);
-    return results
   }
 
   async deleteOne(id: PreviewDelete) {

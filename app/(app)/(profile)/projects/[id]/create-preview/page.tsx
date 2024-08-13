@@ -15,12 +15,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
-import { createClient } from "../../../../../src/utils/supabase/client"
-import { useServerAction } from "zsa-react"
-import { createPreview } from "./actions"
 import { useState } from "react"
+import { useServerAction } from "zsa-react"
+import { createClient } from "../../../../../../src/utils/supabase/server"
+import { createPreview } from "./actions"
+import { useParams } from "next/navigation"
+import console from "console"
 
 export default function CreatePreviewPage() {
+  const path = useParams()
+  console.log(path);
+
   const [videoPreview, setVideoPreview] = useState<File | undefined>(undefined)
   const form = useForm<PreviewClientType>({
     resolver: zodResolver(previewSchema),
@@ -47,7 +52,8 @@ export default function CreatePreviewPage() {
     execute({
       description,
       media: publicUrl,
-      title
+      title: title,
+      project_id: ""
     })
   }
 

@@ -8,7 +8,7 @@ export const profileLinks = [
     value: "works",
   },
   {
-    path: "/previews",
-    value: "previews"
+    path: "/projects",
+    value: "projects"
   }
 ]

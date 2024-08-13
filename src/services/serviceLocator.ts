@@ -1,14 +1,18 @@
 import { PreviewRepository } from "../repositories/PreviewRepository"
+import { ProjectRepository } from "../repositories/ProjectRepository"
 import { AuthService } from "./AuthService"
 import { PreviewService } from "./previewService"
+import { ProjectService } from "./ProjectService"
 
 interface MapServices {
+  projectService: ProjectService
   previewService: PreviewService,
-  authService: AuthService
+  authService: AuthService,
 }
 
 interface MapRepositories {
-  previewRepository: PreviewRepository
+  previewRepository: PreviewRepository,
+  projectRepository: ProjectRepository
 }
 
 export class ServiceLocator {
@@ -24,11 +28,16 @@ export class ServiceLocator {
       },
       authService: () => {
         return new AuthService()
+      },
+      projectService: () => {
+        const projectRepository = this.getOrCreateRepository("projectRepository");
+        return new ProjectService(projectRepository);
       }
     }
 
   private static _repositoryFactory: { [K in keyof MapRepositories]: () => MapRepositories[K] } = {
-    previewRepository: () => new PreviewRepository()
+    previewRepository: () => new PreviewRepository(),
+    projectRepository: () => new ProjectRepository()
   };
 
   private static getOrCreateRepository<K extends keyof MapRepositories>(
