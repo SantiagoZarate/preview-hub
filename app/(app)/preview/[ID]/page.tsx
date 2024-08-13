@@ -1,6 +1,7 @@
 import { ServiceLocator } from "@service/serviceLocator"
 import { Text } from "@/components/ui/text"
 import moment from 'moment'
+import { CommentForm } from "./CommentForm"
 
 interface Props {
   params: {
@@ -36,6 +37,12 @@ export default async function PreviewPage({ params: { ID } }: Props) {
         <p>
           {preview.description}
         </p>
+        <section className="flex flex-col">
+          <header>
+            comments
+          </header>
+          <CommentForm />
+        </section>
       </section>
       <section className="bg-green-500">
         other previews version
