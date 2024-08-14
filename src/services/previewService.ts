@@ -9,9 +9,6 @@ export class PreviewService {
   constructor(private _previewRepository: PreviewRepository) { }
 
   async create(data: PreviewServerType) {
-    const authService = ServiceLocator.getService("authService")
-    const user = await authService.getUser()
-
     const results = await this._previewRepository.create({
       description: data.description,
       title: data.title,

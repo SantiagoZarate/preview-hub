@@ -9,7 +9,8 @@ const textVariants = cva(
     variants: {
       intent: {
         regular: "",
-        title: "uppercase tracking-wide font-bold"
+        title: "uppercase text-base tracking-wide font-bold",
+        detail: "text-xs font-thin italic"
       }
     },
     defaultVariants: {

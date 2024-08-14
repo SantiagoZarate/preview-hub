@@ -17,12 +17,11 @@ import { Input } from "@/components/ui/input"
 import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
 import { useState } from "react"
 import { useServerAction } from "zsa-react"
-import { createClient } from "../../../../../../src/utils/supabase/server"
+import { createClient } from "../../../../../src/utils/supabase/server"
 import { createPreview } from "./actions"
 import { useParams } from "next/navigation"
-import console from "console"
 
-export default function CreatePreviewPage() {
+export default function PreviewForm() {
   const path = useParams()
   console.log(path);
 
@@ -107,7 +106,7 @@ export default function CreatePreviewPage() {
                     form.setValue("media", file)
                   }} />
               </FormControl>
-              <figure className="relative aspect-video min-h-52 rounded-md overflow-hidden">
+              <figure className="relative aspect-square max-h-24 rounded-md overflow-hidden">
                 {
                   videoPreview &&
                   <video

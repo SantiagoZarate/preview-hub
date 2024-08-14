@@ -1,9 +1,7 @@
-import { error } from "console";
-import { PreviewDTO, previewSchemaDTO } from "../shared/dtos/previewDTO";
-import { PreviewMediaDTO, previewMediaSchemaDTO } from "../shared/dtos/previewMediaDTO";
-import { PreviewDelete, PreviewInsert, PreviewSelect } from "../types/preview";
-import { createClient } from "../utils/supabase/server";
 import { PreviewUserMediaDTO, previewUserMediaSchemaDTO } from "../shared/dtos/previewUserMediaDTO";
+import { PreviewDelete, PreviewInsert, PreviewSelect } from "../types/preview";
+import { PreviewDTO, previewSchemaDTO } from "../shared/dtos/previewDTO";
+import { createClient } from "../utils/supabase/server";
 
 export class PreviewRepository {
   private _tableName: string
@@ -13,7 +11,7 @@ export class PreviewRepository {
   }
 
   async create(newPreview: PreviewInsert) {
-    const db = await createClient()
+    const db = createClient()
 
     const { data, error } = await db.rpc("insert_preview", {
       _title: newPreview.title,
