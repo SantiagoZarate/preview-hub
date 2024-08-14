@@ -1,10 +1,10 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { ServiceLocator } from "@service/serviceLocator"
+import { PreviewEmpty } from "@/components/projectSection/PreviewEmpty"
+import { PreviewsList } from "@/components/projectSection/PreviewsList"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Text } from "@/components/ui/text"
-import PreviewForm from "./PreviewForm"
+import { ServiceLocator } from "@service/serviceLocator"
 import Link from "next/link"
-import moment from "moment"
 
 interface Props {
   params: {
@@ -27,7 +27,10 @@ export default async function ProjectPage({ params: { id } }: Props) {
         </Text>
       </header>
       <section>
-        <Dialog>
+        <Link href={`/projects/${id}/create-preview`}>
+          add new preview
+        </Link>
+        {/* <Dialog>
           <DialogTrigger>
             <Badge>
               Add new preview
@@ -36,34 +39,15 @@ export default async function ProjectPage({ params: { id } }: Props) {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add a new preview</DialogTitle>
-              <PreviewForm />
             </DialogHeader>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </section>
-      <section>
-        {
-          project.previews.length
-            ?
-            <ul>
-              {project.previews.map(preview => (
-                <li className="" key={preview.id}>
-                  <Link className="rounded-lg flex flex-col" href={`/preview/${preview.id}`}>
-                    <Text>{preview.title}</Text>
-                    <Text intent={"detail"}>{moment(preview.created_at).fromNow()}</Text>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            :
-            <div className="bg-secondary border border-dotted rounded-lg border-primary p-4">
-              <Text>
-                This projects doesnt have any preview to show,
-                go ahead and upload one!
-              </Text>
-            </div>
-        }
-      </section>
+      {
+        project.previews.length
+          ? <PreviewsList previews={project.previews} />
+          : <PreviewEmpty />
+      }
     </section>
   )
 }

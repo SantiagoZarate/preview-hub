@@ -17,13 +17,13 @@ import { Input } from "@/components/ui/input"
 import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
 import { useState } from "react"
 import { useServerAction } from "zsa-react"
-import { createClient } from "../../../../../src/utils/supabase/server"
-import { createPreview } from "./actions"
+import { createClient } from "../../../../../../src/utils/supabase/server"
+import { createPreview } from "../actions"
 import { useParams } from "next/navigation"
+import { toast } from "@/components/ui/use-toast"
 
 export default function PreviewForm() {
-  const path = useParams()
-  console.log(path);
+  const { id } = useParams()
 
   const [videoPreview, setVideoPreview] = useState<File | undefined>(undefined)
   const form = useForm<PreviewClientType>({
@@ -35,7 +35,11 @@ export default function PreviewForm() {
     }
   })
 
-  const { execute, isPending } = useServerAction(createPreview)
+  const { execute, isPending } = useServerAction(createPreview, {
+    onError: ({ err }) => {
+      toast({ title: "Error while uploading preview", description: err.message })
+    }
+  })
 
   const onSubmit = async ({ description, media, title }: PreviewClientType) => {
     const storage = createClient()
@@ -52,7 +56,7 @@ export default function PreviewForm() {
       description,
       media: publicUrl,
       title: title,
-      project_id: ""
+      project_id: id as string
     })
   }
 

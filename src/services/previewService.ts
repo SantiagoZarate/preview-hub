@@ -1,8 +1,6 @@
 import { PreviewServerType } from "@/lib/zod-validation/preview";
 import { PreviewRepository } from "../repositories/PreviewRepository";
 import { PreviewDelete, PreviewSelect } from "../types/preview";
-import { AuthService } from "./AuthService";
-import { ServiceLocator } from "./serviceLocator";
 
 export class PreviewService {
 

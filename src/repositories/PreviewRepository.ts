@@ -11,7 +11,7 @@ export class PreviewRepository {
   }
 
   async create(newPreview: PreviewInsert) {
-    const db = createClient()
+    const db = await createClient()
 
     const { data, error } = await db.rpc("insert_preview", {
       _title: newPreview.title,

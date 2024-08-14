@@ -1,9 +1,10 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 // import { cookies } from "next/headers";
 import { envs } from "../../../envs";
 
 export const createClient = () => {
   const cookieStore = require('next/headers').cookies()
+  // const cookieStore = cookies()
 
   return createServerClient(
     envs.SUPABASE_URL,
