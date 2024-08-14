@@ -7,7 +7,7 @@ export const commentFormSchema = z.object({
 export type CommentFormSchemaType = z.infer<typeof commentFormSchema>
 
 export const commentServerSchema = commentFormSchema.extend({
-  previewId: z.string()
+  project_id: z.string()
 })
 
 export type CommentServerSchemaType = z.infer<typeof commentServerSchema>

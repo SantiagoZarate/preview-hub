@@ -7,8 +7,8 @@ interface Props extends ButtonProps {
 
 export function ButtonIcon({ icon, children, ...args }: Props) {
   return (
-    <Button {...args}>
-      <span className="group flex items-center">
+    <Button className="p-0" {...args}>
+      <span className="px-4 py-2 w-full h-full group flex items-center">
         <span className="group-hover:-translate-x-0 translate-x-2 transition opacity-0 group-hover:opacity-100">
           {icon}
         </span>

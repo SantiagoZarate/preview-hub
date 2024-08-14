@@ -1,3 +1,4 @@
+import { ProjectCommentsPreviewsDTO, projectCommentsPreviewsSchemaDTO } from "../shared/dtos/projectCommentsPreviewsDTO";
 import { ProjectDTO, projectSchemaDTO } from "../shared/dtos/projectDTO";
 import { ProjectPreviewsDTO, projectPreviewsSchemaDTO } from "../shared/dtos/projectPreviewsDTO";
 import { ProjectInsert, ProjectSelect } from "../types/project.type";
@@ -39,12 +40,12 @@ export class ProjectRepository {
     return data;
   }
 
-  async getById(id: ProjectSelect): Promise<ProjectPreviewsDTO> {
+  async getById(id: ProjectSelect): Promise<ProjectCommentsPreviewsDTO> {
     const db = await createClient()
 
     const { data, error } = await db
       .from(this._tableName)
-      .select("*, previews:preview(*)")
+      .select("*, previews:preview(*), comments:comment(*)")
       .eq("id", id)
       .single()
 
@@ -55,7 +56,7 @@ export class ProjectRepository {
 
     console.log(data);
 
-    return projectPreviewsSchemaDTO.parse(data);
+    return projectCommentsPreviewsSchemaDTO.parse(data);
   }
 
   async getByUser(userID: string): Promise<ProjectDTO[]> {

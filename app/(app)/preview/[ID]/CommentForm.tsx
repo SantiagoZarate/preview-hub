@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useServerAction } from "zsa-react";
 import { createComment } from "./actions";
+import { Button } from "@/components/ui/button";
 
 export function CommentForm() {
   const { ID } = useParams()!
@@ -22,28 +23,31 @@ export function CommentForm() {
   const handleSubmit = (data: CommentFormSchemaType) => {
     execute({
       ...data,
-      previewId: ID as string
+      project_id: ID as string
     })
   }
 
   return (
     <Form {...form}>
-      <form action="" className="flex w-full">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col w-full">
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormControl>
-                <textarea className="w-full bg-secondary rounded-md border border-border p-1" placeholder="this is looking fire!" {...field}></textarea>
-              </FormControl>
               <FormDescription>
                 Add a new comment
               </FormDescription>
+              <FormControl>
+                <textarea className="w-full bg-secondary rounded-md border border-border p-1" placeholder="this is looking fire!" {...field}></textarea>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        <Button className="self-end w-fit" disabled={isPending}>
+          Send
+        </Button>
       </form>
     </Form>
   )

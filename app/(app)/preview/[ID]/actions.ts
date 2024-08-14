@@ -3,6 +3,7 @@
 import { commentServerSchema } from '@/lib/zod-validation/comment'
 import { mediaServerSchema } from '@/lib/zod-validation/media'
 import { ServiceLocator } from '@service/serviceLocator'
+import { revalidatePath } from 'next/cache'
 import { createServerAction, ZSAError } from 'zsa'
 
 export const createComment = createServerAction()
@@ -22,4 +23,5 @@ export const createMedia = createServerAction()
       throw new ZSAError("ERROR", error)
     }
 
+    revalidatePath(`/preview/${input.preview_id}`, "page")
   })

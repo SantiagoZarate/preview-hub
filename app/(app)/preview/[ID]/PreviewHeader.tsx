@@ -18,7 +18,7 @@ export function PreviewHeader({ created_at, title, user }: Props) {
         <Avatar size={"default"} />
         <div className="flex flex-col gap-2">
           <Link href={`/${user.id}`}>
-            <Text>{user.username}</Text>
+            <Text hoverable>{user.username}</Text>
           </Link>
           <Text className="" intent={"detail"}>{moment(created_at).fromNow()}</Text>
         </div>

@@ -1,5 +1,6 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { List } from "@/components/ui/List"
+import { Section, SectionSeparator } from "@/components/ui/section"
 import { ServiceLocator } from "@service/serviceLocator"
 import { CommentForm } from "./CommentForm"
 import { MediaAside } from "./MediaAside"
@@ -42,12 +43,14 @@ export default async function PreviewPage({ params: { ID } }: Props) {
           <p>
             {preview.description}
           </p>
-          <section className="flex flex-col">
-            <header>
-              comments
-            </header>
-            <CommentForm />
-          </section>
+          <Section className="flex flex-col gap-4">
+            <SectionSeparator>
+              Observations
+            </SectionSeparator>
+            <div>
+              {/* TODO */}
+            </div>
+          </Section>
         </section>
         <MediaAside>
           <List>
