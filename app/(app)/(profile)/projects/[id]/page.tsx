@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Text } from "@/components/ui/text"
 import { ServiceLocator } from "@service/serviceLocator"
-import Link from "next/link"
+import { PreviewForm } from "./PreviewForm"
 
 interface Props {
   params: {
@@ -27,10 +27,7 @@ export default async function ProjectPage({ params: { id } }: Props) {
         </Text>
       </header>
       <section>
-        <Link href={`/projects/${id}/create-preview`}>
-          add new preview
-        </Link>
-        {/* <Dialog>
+        <Dialog>
           <DialogTrigger>
             <Badge>
               Add new preview
@@ -40,8 +37,9 @@ export default async function ProjectPage({ params: { id } }: Props) {
             <DialogHeader>
               <DialogTitle>Add a new preview</DialogTitle>
             </DialogHeader>
+            <PreviewForm />
           </DialogContent>
-        </Dialog> */}
+        </Dialog>
       </section>
       {
         project.previews.length

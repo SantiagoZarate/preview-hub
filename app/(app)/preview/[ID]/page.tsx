@@ -1,7 +1,11 @@
-import { ServiceLocator } from "@service/serviceLocator"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import { List } from "@/components/ui/List"
 import { Text } from "@/components/ui/text"
+import { ServiceLocator } from "@service/serviceLocator"
 import moment from 'moment'
 import { CommentForm } from "./CommentForm"
+import { MediaAside } from "./MediaAside"
+import { MediaItem } from "./MediaItem"
 
 interface Props {
   params: {
@@ -14,8 +18,19 @@ export default async function PreviewPage({ params: { ID } }: Props) {
   const preview = await previewService.getOne(ID)
 
   return (
-    <section className="grid grid-cols-5 bg-red-100 w-full">
+    <section className="grid grid-cols-5 w-full py-4">
       <section className="col-span-4 flex flex-col gap-8">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href={`/projects/${preview.project_id}`}>{preview.project.name}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{preview.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <header className="flex flex-col gap-4">
           <h2 className="text-xl">{preview.title}</h2>
           <footer className="flex gap-2 items-center">
@@ -27,7 +42,7 @@ export default async function PreviewPage({ params: { ID } }: Props) {
             </picture>
             <div className="flex flex-col gap-1">
               <p>{moment(preview.created_at).fromNow()}</p>
-              {/* <Text>{preview.users.username}</Text> */}
+              <Text>{preview.project.user.username}</Text>
             </div>
           </footer>
         </header>
@@ -44,9 +59,19 @@ export default async function PreviewPage({ params: { ID } }: Props) {
           <CommentForm />
         </section>
       </section>
-      <section className="bg-green-500">
-        other previews version
-      </section>
+      <MediaAside>
+        <List>
+          {
+            preview.media.map((media, index) => (
+              <MediaItem
+                numberOfVersion={index + 1}
+                key={media.id}
+                media={media}
+              />
+            ))
+          }
+        </List>
+      </MediaAside>
     </section>
   )
 }

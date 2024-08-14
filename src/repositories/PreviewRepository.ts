@@ -3,6 +3,7 @@ import { PreviewDelete, PreviewInsert, PreviewSelect } from "../types/preview";
 import { PreviewDTO, previewSchemaDTO } from "../shared/dtos/previewDTO";
 import { createClient } from "../utils/supabase/server";
 import { PreviewMediaDTO, previewMediaSchemaDTO } from "../shared/dtos/previewMediaDTO";
+import { PreviewMediaProjectUserDTO, previewMediaProjectUserSchemaDTO } from "../shared/dtos/previewMediaProjectUser";
 
 export class PreviewRepository {
   private _tableName: string
@@ -29,12 +30,12 @@ export class PreviewRepository {
     return data
   }
 
-  async getById(id: PreviewSelect): Promise<PreviewMediaDTO> {
+  async getById(id: PreviewSelect): Promise<PreviewMediaProjectUserDTO> {
     const db = await createClient()
 
     const { data, error } = await db
       .from(this._tableName)
-      .select("*, media(*)")
+      .select("*, media(*), project(*, user:users(*))")
       .eq("id", id)
       .single()
 
@@ -44,7 +45,7 @@ export class PreviewRepository {
     }
 
     console.log(data)
-    return previewMediaSchemaDTO.parse(data)
+    return previewMediaProjectUserSchemaDTO.parse(data)
   }
 
   async getByProject(projectID: string): Promise<PreviewDTO[]> {

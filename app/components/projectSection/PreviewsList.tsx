@@ -1,7 +1,5 @@
-import Link from "next/link";
-import moment from "moment";
 import { PreviewDTO } from "../../../src/shared/dtos/previewDTO";
-import { Text } from "../ui/text";
+import { PreviewItem } from "./PreviewItem";
 
 interface Props {
   previews: PreviewDTO[]
@@ -9,14 +7,9 @@ interface Props {
 
 export function PreviewsList({ previews }: Props) {
   return (
-    <ul className="grid grid-cols-3">
+    <ul className="grid grid-cols-3 gap-2">
       {previews.map(preview => (
-        <li className="" key={preview.id}>
-          <Link className="rounded-lg flex flex-col" href={`/preview/${preview.id}`}>
-            <Text>{preview.title}</Text>
-            <Text intent={"detail"}>{moment(preview.created_at).fromNow()}</Text>
-          </Link>
-        </li>
+        <PreviewItem {...preview} />
       ))}
     </ul>
   )

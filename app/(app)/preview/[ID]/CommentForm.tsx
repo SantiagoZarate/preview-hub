@@ -28,16 +28,14 @@ export function CommentForm() {
 
   return (
     <Form {...form}>
-      <form action="" className="flex w-full bg-green-500">
+      <form action="" className="flex w-full">
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
             <FormItem className="w-full">
-              {/* <FormLabel></FormLabel> */}
               <FormControl>
                 <textarea className="w-full bg-secondary rounded-md border border-border p-1" placeholder="this is looking fire!" {...field}></textarea>
-                {/* <Input placeholder="leomessi@gmail.com" {...field} /> */}
               </FormControl>
               <FormDescription>
                 Add a new comment
