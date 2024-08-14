@@ -17,10 +17,10 @@ import { Input } from "@/components/ui/input"
 import { PreviewClientType, previewSchema } from "@/lib/zod-validation/preview"
 import { useState } from "react"
 import { useServerAction } from "zsa-react"
-import { createClient } from "../../../../../src/utils/supabase/client"
 import { createPreview } from "./actions"
 import { useParams } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
+import { uploadFile } from "@/lib/upload-file"
 
 export function PreviewForm() {
   const { id } = useParams()
@@ -45,19 +45,12 @@ export function PreviewForm() {
   })
 
   const onSubmit = async ({ description, media, title }: PreviewClientType) => {
-    const storage = createClient()
     const previewStorageName = `preview-${title}`
-
-    await storage.storage.from("preview-hub").upload(previewStorageName, videoPreview!, {
-      cacheControl: "3600",
-      upsert: true
-    })
-
-    const { data: { publicUrl } } = await storage.storage.from("preview-hub").getPublicUrl(previewStorageName)
+    const mediaURL = await uploadFile(media!, previewStorageName)
 
     execute({
       description,
-      media: publicUrl,
+      media: mediaURL,
       title: title,
       project_id: id as string
     })

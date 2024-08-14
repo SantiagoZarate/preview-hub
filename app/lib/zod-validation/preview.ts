@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { mediaSchema, mediaServerSchema } from './media'
 
 export const previewSchema = z.object({
   title: z.string()
@@ -8,9 +9,7 @@ export const previewSchema = z.object({
 })
 
 export const previewClientSchema = previewSchema.extend({
-  media: z.instanceof(File)
-    .refine(media => media.size <= 1024 * 1024 * 50, { message: 'Media must be less than 50mb' }).nullable()
-  // .transform(files => files.item(0)!)
+  media: mediaSchema.nullable()
 })
 
 export const previewServerSchema = previewSchema.extend({
