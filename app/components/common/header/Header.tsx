@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { ServiceLocator } from "../../../../src/services/serviceLocator";
 
 export async function Header() {
@@ -7,7 +6,7 @@ export async function Header() {
   const user = await authService.getUser()
 
   return (
-    <header className="w-full px-8 fixed top-0">
+    <header className="w-full px-8 fixed top-0 z-50 bg-background">
       <div className="mx-auto max-w-screen-xl justify-between items-center border-b border-border flex py-2">
         <section className="flex gap-4">
           <p className="font-bold">
@@ -21,17 +20,13 @@ export async function Header() {
           {
             user
               ?
-              <Link href={`/${user.user_metadata.username}`}>
-                <Button variant={"outline"}>
-                  {user.user_metadata.username}
-                </Button>
-              </Link>
+              <LinkButton variant={"outline"} href={`/${user.user_metadata.username!}`}>
+                {user.user_metadata.username!}
+              </LinkButton>
               :
-              <Link href={"/login"}>
-                <Button variant={"outline"}>
-                  sign in
-                </Button>
-              </Link>
+              <LinkButton variant={"outline"} href="/login">
+                sign in
+              </LinkButton>
           }
         </section>
       </div>

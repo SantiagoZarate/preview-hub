@@ -19,7 +19,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={inter.className + " bg-background text-primary"}>
         <ToastProvider>
           <Header />
-          <div className="min-h-screen grid grid-rows-[1fr_auto] pt-20">
+          <div className="min-h-screen grid grid-rows-[1fr_auto] pt-[57px]">
             <section className="max-w-screen-xl w-full mx-auto">
               {children}
             </section>

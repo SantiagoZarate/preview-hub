@@ -27,7 +27,7 @@ export default async function PreviewPage({ params: { ID } }: Props) {
             </picture>
             <div className="flex flex-col gap-1">
               <p>{moment(preview.created_at).fromNow()}</p>
-              <Text>{preview.users.username}</Text>
+              {/* <Text>{preview.users.username}</Text> */}
             </div>
           </footer>
         </header>
