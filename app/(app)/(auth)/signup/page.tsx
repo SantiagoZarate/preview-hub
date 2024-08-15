@@ -32,7 +32,6 @@ export default function LoginPage() {
   const { execute, isPending } = useServerAction(signUp)
 
   const onSubmit = (data: SignUpSchemaType) => {
-    console.log("SIGNING UP")
     execute(data)
   }
 

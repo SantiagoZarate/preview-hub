@@ -17,11 +17,9 @@ export class ProjectRepository {
       .single()
 
     if (error) {
-      console.log(error);
       throw new Error("Error creating a new project")
     }
 
-    console.log(data)
     return data;
   }
 
@@ -50,11 +48,8 @@ export class ProjectRepository {
       .single()
 
     if (error) {
-      console.log(error);
       throw new Error("Error getting project")
     }
-
-    console.log(data);
 
     return projectCommentsPreviewsSchemaDTO.parse(data);
   }

@@ -32,8 +32,6 @@ export class AuthService {
     })
 
     if (error) {
-      console.log(error)
-      console.log(data)
       throw new Error(error.message)
     }
 

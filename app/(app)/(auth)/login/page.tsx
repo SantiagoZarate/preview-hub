@@ -43,7 +43,6 @@ export default function LoginPage() {
   })
 
   const onSubmit = (data: SignInSchemaType) => {
-    console.log("LOGIN IN")
     execute(data)
   }
 

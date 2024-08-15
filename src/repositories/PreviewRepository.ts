@@ -23,7 +23,6 @@ export class PreviewRepository {
     })
 
     if (error) {
-      console.log(error)
       throw new Error(error.message)
     }
 
@@ -40,11 +39,9 @@ export class PreviewRepository {
       .single()
 
     if (error) {
-      console.log(error)
       throw new Error(error.message)
     }
 
-    console.log(data)
     return previewMediaProjectUserSchemaDTO.parse(data)
   }
 

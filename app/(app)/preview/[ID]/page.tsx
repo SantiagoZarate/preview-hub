@@ -10,10 +10,15 @@ import { PreviewHeader } from "./PreviewHeader"
 interface Props {
   params: {
     ID: string
+  },
+  searchParams: {
+    [key: string]: string | undefined
   }
 }
 
-export default async function PreviewPage({ params: { ID } }: Props) {
+export default async function PreviewPage({ params: { ID }, searchParams }: Props) {
+  const mediaVersion = searchParams["version"] ?? "nothing"
+  console.log(mediaVersion);
   const previewService = ServiceLocator.getService("previewService")
   const preview = await previewService.getOne(ID)
 

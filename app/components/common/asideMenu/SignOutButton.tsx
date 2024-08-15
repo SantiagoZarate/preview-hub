@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 export function SignOutButton() {
   const signout = async () => {
     "use server"
-    console.log("SIGNINT OUT");
 
     const authService = ServiceLocator.getService("authService")
     await authService.signOut()
