@@ -1,3 +1,4 @@
+import { CubeTransparenteIcon } from "@/components/icons/CubeTransparenteIcon";
 import { PhotoMiniIcon } from "@/components/icons/PhotoMiniIcon";
 import { ProjectManager } from "@/components/projectSection/ProjectManager";
 import { ProjectsLoader } from "@/components/projectSection/ProjectsLoader";
@@ -26,7 +27,7 @@ export default async function ProjectsPage() {
       <Section>
         <header className="flex items-center divide-x">
           <span className="pr-2">
-            <PhotoMiniIcon />
+            <CubeTransparenteIcon />
           </span>
           <Text className="pl-2">Your projects</Text>
         </header>
