@@ -47,4 +47,14 @@ export class AuthService {
 
     return data.user
   }
+
+  async signOut() {
+    const db = await createClient()
+
+    const { error } = await db.auth.signOut()
+
+    if (error) {
+      throw new Error("Error singin out")
+    }
+  }
 }
