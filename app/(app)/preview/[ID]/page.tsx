@@ -2,10 +2,11 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { List } from "@/components/ui/List"
 import { Section, SectionSeparator } from "@/components/ui/section"
 import { ServiceLocator } from "@service/serviceLocator"
-import { CommentForm } from "./CommentForm"
 import { MediaAside } from "./MediaAside"
 import { MediaItem } from "./MediaItem"
 import { PreviewHeader } from "./PreviewHeader"
+import Link from "next/link"
+import { getMediaVersionFromParam } from "@/lib/getMediaVersionFromParam"
 
 interface Props {
   params: {
@@ -17,10 +18,10 @@ interface Props {
 }
 
 export default async function PreviewPage({ params: { ID }, searchParams }: Props) {
-  const mediaVersion = searchParams["version"] ?? "nothing"
-  console.log(mediaVersion);
   const previewService = ServiceLocator.getService("previewService")
   const preview = await previewService.getOne(ID)
+
+  const mediaVersion = getMediaVersionFromParam(searchParams["version"], preview.media.length)
 
   return (
     <section className="w-full flex flex-col gap-4 py-4">
@@ -42,7 +43,7 @@ export default async function PreviewPage({ params: { ID }, searchParams }: Prop
       <section className="grid grid-cols-5 gap-4">
         <section className="col-span-4 flex flex-col gap-8">
           <figure className="relative aspect-video min-h-52 rounded-md overflow-hidden border border-border">
-            <video className="z-10 w-full h-full" controls src={preview.media[0].url}></video>
+            <video className="z-10 w-full h-full" controls src={preview.media[Number(mediaVersion) - 1].url}></video>
             <div className="absolute bg-secondary h-full w-full" />
           </figure>
           <p>
@@ -61,11 +62,15 @@ export default async function PreviewPage({ params: { ID }, searchParams }: Prop
           <List>
             {
               preview.media.map((media, index) => (
-                <MediaItem
-                  numberOfVersion={index + 1}
+                <Link
+                  href={`/preview/${ID}?version=${index + 1}`}
                   key={media.id}
-                  media={media}
-                />
+                >
+                  <MediaItem
+                    numberOfVersion={index + 1}
+                    media={media}
+                  />
+                </Link>
               ))
             }
           </List>
