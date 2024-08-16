@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useServerAction } from "zsa-react";
 import { createComment } from "./actions";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
 export function CommentForm() {
   const { ID } = useParams()!
@@ -18,7 +19,15 @@ export function CommentForm() {
     }
   })
 
-  const { execute, isPending } = useServerAction(createComment)
+  const { execute, isPending } = useServerAction(createComment, {
+    onError: ({ err }) => {
+      toast({ title: "Oops there was an error", description: "Your comment couldn't be posted" })
+    },
+    onSuccess: () => {
+      toast({ title: "Comment posted succesfully" })
+      form.reset()
+    }
+  })
 
   const handleSubmit = (data: CommentFormSchemaType) => {
     execute({

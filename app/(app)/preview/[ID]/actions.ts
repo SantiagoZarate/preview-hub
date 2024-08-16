@@ -9,7 +9,15 @@ import { createServerAction, ZSAError } from 'zsa'
 export const createComment = createServerAction()
   .input(commentServerSchema)
   .handler(async ({ input }) => {
-    // const commentService = ServiceLocator.getService("commentService")
+    const commentService = ServiceLocator.getService("commentService")
+
+    try {
+      await commentService.create(input)
+    } catch (error) {
+      throw new ZSAError("ERROR", error)
+    }
+
+    revalidatePath(`/projects/${input.project_id}`, "page")
   })
 
 export const createMedia = createServerAction()

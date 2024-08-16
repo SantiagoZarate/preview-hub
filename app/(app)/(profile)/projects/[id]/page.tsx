@@ -57,12 +57,19 @@ export default async function ProjectPage({ params: { ID } }: Props) {
         <CommentForm />
         <List>
           {
+            project.comments.map(comment => (
+              <li key={comment.id}>
+                {comment.content}
+              </li>
+            ))
+          }
+          {/* {
             ["this is a comment", "this is another", "yet another one"].map(c => (
               <li key={c}>
                 <Text>{c}</Text>
               </li>
             ))
-          }
+          } */}
         </List>
       </Section>
     </section>

@@ -11,24 +11,34 @@ export type Database = {
     Tables: {
       comment: {
         Row: {
+          author: string
           content: string
           created_at: string
           id: string
           project_id: string
         }
         Insert: {
+          author: string
           content: string
           created_at?: string
           id?: string
           project_id: string
         }
         Update: {
+          author?: string
           content?: string
           created_at?: string
           id?: string
           project_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "comment_author_fkey"
+            columns: ["author"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "comment_project_id_fkey"
             columns: ["project_id"]
