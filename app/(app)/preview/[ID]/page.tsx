@@ -37,6 +37,8 @@ export default async function PreviewPage({ params: { ID }, searchParams }: Prop
         </BreadcrumbList>
       </Breadcrumb>
       <PreviewHeader
+        preview_id={ID}
+        project_id={preview.project_id}
         created_at={preview.created_at}
         title={preview.title}
         user={preview.project.user} />

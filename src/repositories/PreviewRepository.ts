@@ -60,7 +60,7 @@ export class PreviewRepository {
     return data.map(d => previewSchemaDTO.parse(d))
   }
 
-  async deleteById(id: PreviewDelete) {
+  async delete(id: PreviewDelete) {
     const db = await createClient()
 
     const { data, error } = await db

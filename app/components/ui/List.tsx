@@ -14,18 +14,22 @@ const listStyle = cva(
       vertical: {
         true: "flex-col"
       },
+      divide: {
+        true: "divide-y divide-border"
+      }
     },
     defaultVariants: {
       gap: "big",
-      vertical: true
+      vertical: true,
+      divide: false
     }
   }
 )
 
 type Props = ComponentProps<"ul"> & VariantProps<typeof listStyle>
 
-export function List({ gap, vertical, className, ...args }: Props) {
+export function List({ gap, vertical, className, divide, ...args }: Props) {
   return (
-    <ul className={cn(listStyle({ gap, vertical, className }))} {...args} />
+    <ul className={cn(listStyle({ gap, vertical, divide, className }))} {...args} />
   )
 }

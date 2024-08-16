@@ -1,3 +1,5 @@
+import { CommentForm } from "@/(app)/preview/[ID]/CommentForm"
+import { Comment } from "@/components/comment/Comment"
 import { PreviewEmpty } from "@/components/projectSection/PreviewEmpty"
 import { PreviewsList } from "@/components/projectSection/PreviewsList"
 import { Badge } from "@/components/ui/badge"
@@ -7,8 +9,6 @@ import { Section, SectionSeparator } from "@/components/ui/section"
 import { Text } from "@/components/ui/text"
 import { ServiceLocator } from "@service/serviceLocator"
 import { PreviewForm } from "./PreviewForm"
-import { CommentForm } from "@/(app)/preview/[ID]/CommentForm"
-import { Comment } from "@/components/comment/Comment"
 
 interface Props {
   params: {

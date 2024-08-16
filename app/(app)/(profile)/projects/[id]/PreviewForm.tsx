@@ -23,7 +23,7 @@ import { uploadFile } from "@/lib/upload-file"
 import { createPreview } from "./actions"
 
 export function PreviewForm() {
-  const { id } = useParams()
+  const { ID } = useParams()
 
   const [videoPreview, setVideoPreview] = useState<File | undefined>(undefined)
   const form = useForm<PreviewClientType>({
@@ -52,7 +52,7 @@ export function PreviewForm() {
       description,
       media: mediaURL,
       title: title,
-      project_id: id as string
+      project_id: ID as string
     })
   }
 

@@ -22,8 +22,8 @@ export class PreviewService {
     return result
   }
 
-  async deleteOne(id: PreviewDelete) {
-    const result = await this._previewRepository.deleteById(id);
+  async delete(id: PreviewDelete) {
+    const result = await this._previewRepository.delete(id);
     return result;
   }
 }
