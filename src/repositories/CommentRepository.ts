@@ -1,4 +1,4 @@
-import { CommentInsert } from "../types/comment.type";
+import { CommentDelete, CommentInsert } from "../types/comment.type";
 import { createClient } from "../utils/supabase/server";
 
 export class CommentRepository {
@@ -19,4 +19,19 @@ export class CommentRepository {
     return data;
   }
 
+  async delete(id: CommentDelete) {
+    const db = await createClient()
+
+    const { data, error } = await db.from(this._tableName)
+      .delete()
+      .eq("id", id)
+      .select("*")
+      .single()
+
+    if (error) {
+      throw new Error("Error deleting comment with id: " + id)
+    }
+
+    return data;
+  }
 }

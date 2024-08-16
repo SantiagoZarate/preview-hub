@@ -1,6 +1,7 @@
 import { CommentServerSchemaType } from "@/lib/zod-validation/comment";
 import { CommentRepository } from "../repositories/CommentRepository";
 import { ServiceLocator } from "./serviceLocator";
+import { CommentDelete } from "../types/comment.type";
 
 export class CommentService {
 
@@ -17,5 +18,10 @@ export class CommentService {
     })
 
     return result;
+  }
+
+  async delete(id: CommentDelete) {
+    const result = await this._commentRepository.delete(id)
+    return result
   }
 }

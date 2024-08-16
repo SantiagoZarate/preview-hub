@@ -9,7 +9,7 @@ export function PreviewsList({ previews }: Props) {
   return (
     <ul className="grid grid-cols-3 gap-2">
       {previews.map(preview => (
-        <PreviewItem {...preview} />
+        <PreviewItem key={preview.id} {...preview} />
       ))}
     </ul>
   )

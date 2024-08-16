@@ -4,7 +4,8 @@ export const commentSchemaDTO = z.object({
   content: z.string(),
   created_at: z.string(),
   id: z.string(),
-  project_id: z.string()
+  project_id: z.string(),
+  author: z.string()
 })
 
 export type CommentDTO = z.infer<typeof commentSchemaDTO>

@@ -8,15 +8,21 @@ const textVariants = cva(
     variants: {
       intent: {
         regular: "",
-        title: "uppercase text-base tracking-wide font-bold",
+        title: "uppercase tracking-wide font-bold",
         detail: "text-xs font-thin italic"
       },
       hoverable: {
         true: "hover:-translate-y-[2px] transition"
+      },
+      size: {
+        regular: "text-base",
+        big: "text-xl",
+        tiny: "text-xs"
       }
     },
     defaultVariants: {
       intent: "regular",
+      size: "regular",
       hoverable: false
     }
   }
@@ -26,12 +32,12 @@ type Props = VariantProps<typeof textVariants> & React.ComponentProps<"p"> & {
   asChild?: boolean
 }
 
-const Text = React.forwardRef<HTMLParagraphElement, Props>(({ className, intent, hoverable, asChild = false, ...props }, ref) => {
+const Text = React.forwardRef<HTMLParagraphElement, Props>(({ className, intent, hoverable, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "p"
   return (
     <Comp
       ref={ref}
-      className={textVariants({ intent, hoverable, className })}
+      className={textVariants({ intent, hoverable, size, className })}
       {...props}
     />
   )

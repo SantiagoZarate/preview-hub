@@ -8,6 +8,7 @@ import { Text } from "@/components/ui/text"
 import { ServiceLocator } from "@service/serviceLocator"
 import { PreviewForm } from "./PreviewForm"
 import { CommentForm } from "@/(app)/preview/[ID]/CommentForm"
+import { Comment } from "@/components/comment/Comment"
 
 interface Props {
   params: {
@@ -55,21 +56,14 @@ export default async function ProjectPage({ params: { ID } }: Props) {
       <Section>
         <SectionSeparator>comments</SectionSeparator>
         <CommentForm />
-        <List>
+        <List gap={"off"}>
           {
             project.comments.map(comment => (
-              <li key={comment.id}>
-                {comment.content}
-              </li>
+              <Comment
+                key={comment.id}
+                comment={comment} />
             ))
           }
-          {/* {
-            ["this is a comment", "this is another", "yet another one"].map(c => (
-              <li key={c}>
-                <Text>{c}</Text>
-              </li>
-            ))
-          } */}
         </List>
       </Section>
     </section>

@@ -1,3 +1,4 @@
+import { log } from "console";
 import { ProjectCommentsPreviewsDTO, projectCommentsPreviewsSchemaDTO } from "../shared/dtos/projectCommentsPreviewsDTO";
 import { ProjectDTO, projectSchemaDTO } from "../shared/dtos/projectDTO";
 import { ProjectPreviewsDTO, projectPreviewsSchemaDTO } from "../shared/dtos/projectPreviewsDTO";
@@ -43,7 +44,7 @@ export class ProjectRepository {
 
     const { data, error } = await db
       .from(this._tableName)
-      .select("*, previews:preview(*), comments:comment(*)")
+      .select("*, previews:preview(*), comments:comment(*, author:users(*))")
       .eq("id", id)
       .single()
 
