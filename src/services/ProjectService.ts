@@ -1,7 +1,7 @@
 import { ProjectSchemaType } from "@/lib/zod-validation/project";
 import { ProjectRepository } from "../repositories/ProjectRepository";
 import { ServiceLocator } from "./serviceLocator";
-import { ProjectSelect } from "../types/project.type";
+import { ProjectDelete, ProjectSelect } from "../types/project.type";
 
 export class ProjectService {
 
@@ -22,7 +22,7 @@ export class ProjectService {
       name: data.name
     })
 
-    return result
+    return result.id
   }
 
   async getByUser() {
@@ -38,4 +38,8 @@ export class ProjectService {
     return results
   }
 
+  async delete(id: ProjectDelete) {
+    const results = await this._projectRepository.delete(id);
+    return results
+  }
 }

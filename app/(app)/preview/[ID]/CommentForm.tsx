@@ -48,7 +48,10 @@ export function CommentForm() {
                 Add a new comment
               </FormDescription>
               <FormControl>
-                <textarea className="w-full bg-secondary rounded-md border border-border p-1" placeholder="this is looking fire!" {...field}></textarea>
+                <textarea
+                  className="w-full bg-secondary rounded-md border border-border p-1"
+                  placeholder="this is looking fire!"
+                  {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

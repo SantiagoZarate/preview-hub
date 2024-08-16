@@ -1,14 +1,12 @@
-import { log } from "console";
 import { ProjectCommentsPreviewsDTO, projectCommentsPreviewsSchemaDTO } from "../shared/dtos/projectCommentsPreviewsDTO";
 import { ProjectDTO, projectSchemaDTO } from "../shared/dtos/projectDTO";
-import { ProjectPreviewsDTO, projectPreviewsSchemaDTO } from "../shared/dtos/projectPreviewsDTO";
-import { ProjectInsert, ProjectSelect } from "../types/project.type";
+import { ProjectDelete, ProjectInsert, ProjectSelect } from "../types/project.type";
 import { createClient } from "../utils/supabase/server";
 
 export class ProjectRepository {
   private _tableName: string = "project";
 
-  async create(newProject: ProjectInsert) {
+  async create(newProject: ProjectInsert): Promise<ProjectDTO> {
     const db = await createClient()
 
     const { data, error } = await db
@@ -21,7 +19,7 @@ export class ProjectRepository {
       throw new Error("Error creating a new project")
     }
 
-    return data;
+    return projectSchemaDTO.parse(data);
   }
 
   async getAll() {
@@ -49,6 +47,7 @@ export class ProjectRepository {
       .single()
 
     if (error) {
+      console.log(error);
       throw new Error("Error getting project")
     }
 
@@ -69,4 +68,23 @@ export class ProjectRepository {
 
     return data.map(d => projectSchemaDTO.parse(d));
   }
+
+  async delete(id: ProjectDelete): Promise<ProjectDTO> {
+    const db = await createClient()
+
+    const { data, error } = await db
+      .from(this._tableName)
+      .delete()
+      .eq("id", id)
+      .select("*")
+      .single()
+
+    if (error) {
+      throw new Error("Error creating a new project")
+    }
+
+    return projectSchemaDTO.parse(data);
+  }
+
+
 }

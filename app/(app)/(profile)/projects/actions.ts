@@ -10,11 +10,10 @@ export const deletePreview = createServerAction()
     id: z.string()
   }))
   .handler(async ({ input }) => {
-    const previewService = ServiceLocator.getService("previewService")
-    let preview;
+    const projectService = ServiceLocator.getService("projectService")
 
     try {
-      preview = previewService.deleteOne(input.id)
+      await projectService.delete(input.id)
     } catch (error) {
       throw new ZSAError("ERROR", error)
     }
