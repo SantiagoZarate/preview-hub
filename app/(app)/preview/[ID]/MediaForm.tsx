@@ -40,6 +40,8 @@ export default function MediaForm() {
 
   const handleSubmit = async (data: MediaFormSchemaType) => {
     setIsLoading(true)
+    console.log(data);
+
     const mediaName = `${new Date()}-media`
     let mediaURL;
 

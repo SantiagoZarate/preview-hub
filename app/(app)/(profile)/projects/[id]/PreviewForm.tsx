@@ -21,10 +21,11 @@ import { useParams } from "next/navigation"
 import { toast } from "@/components/ui/use-toast"
 import { uploadFile } from "@/lib/upload-file"
 import { createPreview } from "./actions"
+import { Spinner } from "@/components/loader/spinner"
 
 export function PreviewForm() {
   const { ID } = useParams()
-
+  const [uploadMediaIsPending, setUploadMediaIsPending] = useState(false)
   const [videoPreview, setVideoPreview] = useState<File | undefined>(undefined)
   const form = useForm<PreviewClientType>({
     resolver: zodResolver(previewSchema),
@@ -35,25 +36,35 @@ export function PreviewForm() {
     }
   })
 
-  const { execute, isPending } = useServerAction(createPreview, {
+  const { execute } = useServerAction(createPreview, {
     onError: ({ err }) => {
       toast({ title: "Error while uploading preview", description: err.message })
     },
     onSuccess: () => {
       toast({ title: "Preview uploaded succesfully" })
+    },
+    onFinish: () => {
+      setUploadMediaIsPending(false)
     }
   })
 
   const onSubmit = async ({ description, media, title }: PreviewClientType) => {
-    const previewStorageName = `preview-${title}`
-    const mediaURL = await uploadFile(media!, previewStorageName)
+    console.log(videoPreview);
 
-    execute({
-      description,
-      media: mediaURL,
-      title: title,
-      project_id: ID as string
-    })
+    setUploadMediaIsPending(true)
+    const previewStorageName = `preview-${title}`
+
+    try {
+      const mediaURL = await uploadFile(videoPreview!, previewStorageName)
+      execute({
+        description,
+        media: mediaURL,
+        title: title,
+        project_id: ID as string
+      })
+    } catch (e) {
+      toast({ title: "Error while uploading preview" })
+    }
   }
 
   return (
@@ -129,7 +140,11 @@ export function PreviewForm() {
             </FormItem>
           )}
         />
-        <Button disabled={isPending} type="submit">Submit</Button>
+        <Button disabled={uploadMediaIsPending} type="submit">
+          {
+            uploadMediaIsPending ? <Spinner /> : "Submit"
+          }
+        </Button>
       </form>
     </Form>
   )
