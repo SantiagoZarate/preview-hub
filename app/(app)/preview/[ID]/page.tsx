@@ -7,6 +7,8 @@ import { MediaItem } from "./MediaItem"
 import { PreviewHeader } from "./PreviewHeader"
 import Link from "next/link"
 import { getMediaVersionFromParam } from "@/lib/getMediaVersionFromParam"
+import { ObservationDTO } from "../../../../src/shared/dtos/observationDTO"
+import { Text } from "@/components/ui/text"
 
 interface Props {
   params: {
@@ -20,6 +22,16 @@ interface Props {
 export default async function PreviewPage({ params: { ID }, searchParams }: Props) {
   const previewService = ServiceLocator.getService("previewService")
   const preview = await previewService.getOne(ID)
+
+  const observations: ObservationDTO[] = [
+    {
+      at_timestamp: 2,
+      content: "muy bueno",
+      created_at: "",
+      id: "1",
+      media_id: ""
+    }
+  ]
 
   const mediaVersion = getMediaVersionFromParam(searchParams["version"], preview.media.length)
 
@@ -55,9 +67,15 @@ export default async function PreviewPage({ params: { ID }, searchParams }: Prop
             <SectionSeparator>
               Observations
             </SectionSeparator>
-            <div>
-              {/* TODO */}
-            </div>
+            <List>
+              {observations.map(obs => (
+                <div key={obs.content}>
+                  <Text>
+                    {obs.content}
+                  </Text>
+                </div>
+              ))}
+            </List>
           </Section>
         </section>
         <MediaAside>

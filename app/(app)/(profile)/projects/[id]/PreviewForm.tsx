@@ -49,19 +49,37 @@ export function PreviewForm() {
   })
 
   const onSubmit = async ({ description, media, title }: PreviewClientType) => {
+    const fileCallbackToPromise = (fileObj: HTMLVideoElement) => {
+      return Promise.race([
+        new Promise((resolve) => {
+          if (fileObj instanceof HTMLImageElement) fileObj.onload = resolve;
+          else fileObj.onloadedmetadata = resolve;
+        }),
+        new Promise((_, reject) => {
+          setTimeout(reject, 1000);
+        }),
+      ]);
+    };
+
     console.log(videoPreview);
+    const videoObject = URL.createObjectURL(videoPreview!)
+    const video = document.createElement("video")
+    video.src = videoObject
+
+    await fileCallbackToPromise(video);
+    console.log(video.duration / 60);
 
     setUploadMediaIsPending(true)
     const previewStorageName = `preview-${title}`
 
     try {
-      const mediaURL = await uploadFile(videoPreview!, previewStorageName)
-      execute({
-        description,
-        media: mediaURL,
-        title: title,
-        project_id: ID as string
-      })
+      // const mediaURL = await uploadFile(videoPreview!, previewStorageName)
+      // execute({
+      //   description,
+      //   media: mediaURL,
+      //   title: title,
+      //   project_id: ID as string
+      // })
     } catch (e) {
       toast({ title: "Error while uploading preview" })
     }
